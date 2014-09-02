@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd" xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" xmlns:mvc="http://www.springframework.org/schema/mvc">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.wavemaker.runtime.WMObjectMapper"/>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" id="contentNegotiationManager">
+        <property name="favorPathExtension" value="false"/>
+    </bean>
+    <import resource="classpath:springapp.xml"/>
+    <import resource="project-prefabs.xml"/>
+    <import resource="project-config.xml"/>
+    <import resource="project-services.xml"/>
+    <import resource="project-managers.xml"/>
+    <import resource="project-security.xml"/>
+    <import resource="project-spring.xml"/>
+    <import resource="project-file-service.xml"/>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" id="urlMapping">
+        <property name="mappings">
+            <value>
+                /**/*.json=agJSONController
+                /**/*.download=agFileDownloadController
+                /**/*.flashUploader=agFlashFileUploadController
+                /**/*.upload=agFileUploadController
+            </value>
+        </property>
+        <property name="alwaysUseFullPath" value="true"/>
+    </bean>
+    <bean class="com.wavemaker.runtime.SystemPropertyInitiliazingBean" id="systemPropertyInitializer">
+        <property name="systemProperties">
+            <map>
+                <entry key="user.language" value="en"/>
+                <entry key="com.mchange.v2.c3p0.management.ManagementCoordinator" value="com.mchange.v2.c3p0.management.NullManagementCoordinator"/>
+            </map>
+        </property>
+    </bean>
+    <bean class="com.wavemaker.runtime.web.filter.CacheControlFilter" id="cacheControlFilter"/>
+    <bean class="com.wavemaker.runtime.data.exceptionresolver.ApplicationRestServiceExceptionResolver" id="AppHandlerExceptionResolver"/>
+    <mvc:resources cache-period="31556926" location="/" mapping="/wavemaker/**" xmlns:mvc="http://www.springframework.org/schema/mvc"/>
+    <import resource="project-rest-service.xml"/>
+</beans>

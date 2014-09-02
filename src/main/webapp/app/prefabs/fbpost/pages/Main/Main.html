@@ -1,0 +1,39 @@
+<wm-page data-ng-controller="FbpostController" name="fbPostPrefab">
+    <wm-view backgroundcolor="#fff" name="fbPostView">
+        <wm-panel backgroundcolor="#f9f9f9" name="prefabPanel" bordercolor="#d3dae8" borderstyle="solid" bordertop="1" borderleft="1" borderright="1" borderbottom="1" paddingtop="2" paddingright="2" paddingleft="2" paddingbottom="2" paddingunit="em" height="100%">
+            <wm-spinner name="loading-state" show={{loadingState}}></wm-spinner>
+            <wm-message name="message" show="{{msg.show}}" caption="{{msg.desc}}" type="{{msg.type}}" hide-close="true" paddingtop="8" paddingbottom="8" paddingright="8" paddingleft="8" paddingunit="px"></wm-message>
+            <wm-composite widget="text" name="campaignName">
+                <wm-label class="col-md-2" name="titleLabel" caption="Title"></wm-label>
+                <wm-text scopedatavalue="model.name" placeholder="Enter campaign name" height="30" name="title"></wm-text>
+            </wm-composite>
+            <wm-composite widget="text" name="campaignMessage">
+                <wm-label class="col-md-2" name="messageLabel" caption="Message"></wm-label>
+                <wm-text scopedatavalue="model.message" placeholder="Enter message" height="30" name="message"></wm-text>
+            </wm-composite>
+            <wm-composite widget="text" name="campaignStartDate">
+                <wm-label class="col-md-2" name="dateLabel" caption="Start Date"></wm-label>
+                <wm-text type="date" scopedatavalue="model.startDate" height="30" name="startDate" lineheight="16px"></wm-text>
+            </wm-composite>
+            <wm-composite widget="text" name="campaignURL">
+                <wm-label class="col-md-2" name="urlLabel" caption="URL"></wm-label>
+                <wm-text scopedatavalue="model.url" placeholder="Enter URL" height="30" name="url"></wm-text>
+            </wm-composite>
+            <wm-composite widget="text" name="campaignDesc">
+                <wm-label class="col-md-2" name="descLabel" caption="Description" lineheight="36px"></wm-label>
+                <wm-textarea scopedatavalue="model.description" placeholder="Enter campaign description" name="desc"></wm-textarea>
+            </wm-composite>
+            <wm-panel name="uploadPicPanel" minheight="0" overflow="hidden">
+                <wm-column columnwidth="2" name="uploadlabelColumn" paddingleft="0" paddingright="0" paddingunit="px">
+                    <wm-label class="col-md-2" name="uploadlabel" caption="Upload" textalign="left" width="120"></wm-label>
+                </wm-column>
+                <wm-column columnwidth="10" name="picUploadColumn">
+                    <wm-fileupload name="picUpload" singlefileupload="true" width="60px" height="26px" textalign="center" backgroundcolor="#fff" paddingleft="0" paddingright="0" paddingunit="px" on-success="picUploadSuccess($event, $scope)"></wm-fileupload>
+                </wm-column>
+            </wm-panel>
+            <wm-panel name="submitButtonPanel" margintop="16" marginunit="px" minheight="0">
+                <wm-button width="150" on-click="postToFB()" caption="Post to Facebook" name="postToFB" marginleft="32" marginunit="px" backgroundcolor="#4c69ba" color="#fff"></wm-button>
+            </wm-panel>
+        </wm-panel>
+    </wm-view>
+</wm-page>
